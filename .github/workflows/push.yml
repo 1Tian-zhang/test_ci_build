@@ -31,5 +31,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_${{ env.CUR_COMMITID }}
+          tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_$(GITHUB_SHA)
           file: docker/Dockerfile
