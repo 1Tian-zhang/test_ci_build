@@ -6,7 +6,8 @@ on:
       - 'master'
 
 env:
-  CUR_DATE: $(date +"%Y%m%d")
+  # CUR_DATE: $(date +'%Y-%m-%d')
+  CUR_DATE: "123"
   CUR_COMMITID: ${{ GITHUB_SHA }}
 
 jobs:
