@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - 'aaxmaster'
+      - 'master'
 
 # env
 #   CUR_DATE: $(date +'%Y-%m-%d')
