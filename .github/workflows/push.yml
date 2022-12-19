@@ -6,9 +6,9 @@ on:
       - 'master'
 
 env:
-  # CUR_DATE: $(date +'%Y-%m-%d')
-  CUR_DATE: "123"
-  CUR_COMMITID: `$GITHUB_SHA`
+  CUR_DATE: $(date +'%Y-%m-%d')
+#   CUR_DATE: "123"
+  CUR_COMMITID: $GITHUB_SHA
 
 jobs:
   docker:
@@ -31,5 +31,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_${{GITHUB_SHA}}
+          tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_${{ GITHUB_SHA }}
           file: docker/Dockerfile
