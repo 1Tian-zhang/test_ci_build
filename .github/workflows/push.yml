@@ -5,10 +5,10 @@ on:
     branches:
       - 'master'
 
-env:
-  CUR_DATE: $(date +'%Y-%m-%d')
-#   CUR_DATE: "123"
-  CUR_COMMITID: "123"
+# env:
+#   CUR_DATE: $(date +'%Y-%m-%d')
+# #   CUR_DATE: "123"
+#   CUR_COMMITID: "123"
 
 jobs:
   docker:
@@ -26,12 +26,17 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: set NOW
+        run: |
+            echo "::set-env name=NOW::$(date +'%Y%m%d')"
+      - name: set COMMITID
+        run: |
+            echo "::set-env name=COMMITID::$(GITHUB_SHA)"
       -
         name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.NOW }}
+          tags: hhczy1003/test:ci_${{ env.NOW }}_${{ env.COMMITID }}
           file: docker/Dockerfile
-        env:
-          NOW: $(date +'%Y-%m-%dT%H:%M:%S')
