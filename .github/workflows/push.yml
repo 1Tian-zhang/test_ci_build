@@ -31,5 +31,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.CUR_DATE }}
+          tags: ${{ env.NOW }}
           file: docker/Dockerfile
+        env:
+          NOW: $(date +'%Y-%m-%dT%H:%M:%S')
