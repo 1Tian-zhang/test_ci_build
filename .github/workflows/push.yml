@@ -32,11 +32,11 @@ jobs:
             echo "NOW=$(date +'%Y%m%d')" >> $GITHUB_ENV
       - name: set env
         run: |
-            echo "COMMITID=$(GITHUB_SHA)" >> $GITHUB_ENV
+            echo "COMMITID=${GITHUB_SHA:0:6}" >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: hhczy1003/test:ci_${{ env.NOW }}_${{ github.sha }}
+          tags: hhczy1003/test:ci_${{ env.NOW }}_${{ env.COMMITID }}
           file: docker/Dockerfile

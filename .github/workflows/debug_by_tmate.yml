@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - 'master'
+      - 'aamaster'
 jobs:
   build:
     runs-on: ubuntu-latest
