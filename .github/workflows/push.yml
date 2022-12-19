@@ -3,9 +3,9 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'aaxmaster'
 
-# env:
+# env
 #   CUR_DATE: $(date +'%Y-%m-%d')
 # #   CUR_DATE: "123"
 #   CUR_COMMITID: "123"
