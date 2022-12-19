@@ -7,7 +7,7 @@ on:
 
 env:
   cur_date: $(date +"%Y%m%d")
-  cur_commitID: ${{ GITHUB_SHA:0-6 }}
+  # cur_commitID: ${{ GITHUB_SHA:0-6 }}
 
 jobs:
   docker:
@@ -30,5 +30,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: hhczy1003/test:ci_${{ cur_date }}_${{ cur_commitID }}
+          tags: hhczy1003/test:ci_$(cur_date)
           file: docker/Dockerfile
