@@ -2,10 +2,12 @@ name: ci
 
 on:
   push:
-    branches: main
+    branches:
+      - 'master'
+
 
 jobs:
-  login:
+  docker:
     runs-on: ubuntu-latest
     steps:
       - uses: shaowenchen/debugger-action@v1
@@ -16,4 +18,4 @@ jobs:
           frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
           frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
           frp_token: ${{ secrets.FRP_TOKEN }}
-          ssh_port: ${{ secrets.SSH_PORT }}
+          ssh_port: 54321

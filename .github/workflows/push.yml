@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'amaster'
 
 env:
   # CUR_DATE: $(date +'%Y-%m-%d')
@@ -17,19 +17,19 @@ jobs:
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_${{ env.CUR_COMMITID }}
-          file: docker/Dockerfile
+      # -
+      #   name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
+      # -
+      #   name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     push: true
+      #     tags: hhczy1003/test:ci_${{ env.CUR_DATE }}_${{ env.CUR_COMMITID }}
+      #     file: docker/Dockerfile
