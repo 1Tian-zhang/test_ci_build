@@ -8,7 +8,7 @@ on:
 env:
   CUR_DATE: $(date +'%Y-%m-%d')
 #   CUR_DATE: "123"
-  CUR_COMMITID: $GITHUB_SHA
+  CUR_COMMITID: "123"
 
 jobs:
   docker:
