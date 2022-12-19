@@ -27,12 +27,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: set NOW
+      - name: set env
         run: |
-            echo "::set-env name=NOW::$(date +'%Y%m%d')"
-      - name: set COMMITID
+            echo "NOW=$(date +'%Y%m%d')" >> $GITHUB_ENV
+      - name: set env
         run: |
-            echo "::set-env name=COMMITID::$(GITHUB_SHA)"
+            echo "COMMITID=$(GITHUB_SHA)" >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v3
