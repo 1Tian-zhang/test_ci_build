@@ -1,0 +1,17 @@
+name: build_dev
+
+on: push
+
+jobs:
+  build_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set env
+        run: |
+          start=$(date +%s)
+          img_suffix="ci"_$(date +'%Y%m%d')_${GITHUB_SHA:0:6}
+          echo "build dev images: "$img_suffix
+          sleep 3
+          end=$(date +%s)
+          echo "build cost:"$(( end - start ))seconds
+      

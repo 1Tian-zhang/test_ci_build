@@ -1,7 +1,7 @@
 FROM python:3.8.16-slim
 
 
-RUN pip install flask
+# RUN pip install flask
 
 COPY demo.py /
 

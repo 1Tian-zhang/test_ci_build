@@ -5,38 +5,74 @@ on:
     branches:
       - 'master'
 
-# env
-#   CUR_DATE: $(date +'%Y-%m-%d')
-# #   CUR_DATE: "123"
-#   CUR_COMMITID: "123"
+env:
+  CUR_DATE: $(date +'%Y-%m-%d')
+#   CUR_DATE: "123"
+  CUR_COMMITID: ${GITHUB_SHA:0:6}
+
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  APP_NAME: httpproxy
+  DOCKERHUB_REPO: isayme/httpproxy
 
 jobs:
+
+
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # -
+      #   name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
+      # -
+      #   name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: set env
         run: |
             echo "NOW=$(date +'%Y%m%d')" >> $GITHUB_ENV
       - name: set env
         run: |
-            echo "COMMITID=${GITHUB_SHA:0:6}" >> $GITHUB_ENV
+            # echo "COMMITID=${GITHUB_SHA:0:6}" >> $GITHUB_ENV
+            # echo $GITHUB_ENV
+            # echo "hello"
+            # echo $GITHUB_ENV
+            # cat $GITHUB_ENV
+            # echo ${{env.COMMITID}}
+            # echo $GITHUB_ENV["COMMITID"]
+            # echo ${GITHUB_SHA:0:6}
+            # echo "end"
+            # echo ${{ env.COMMITID }}
+            # echo ${{ env.CUR_DATE }}
+            # echo ${{ env.CUR_COMMITID }}
+      
+
+
+      - name: Generate App Version
+        # run: echo APP_VERSION=`date +'%Y-%m-%d'` >> $GITHUB_ENV
+        run: echo APP_VERSION=`git describe --tags --always` >> $GITHUB_ENV
+      - name: show env
+        run: echo $GITHUB_ENV
       -
         name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v2
         with:
-          push: true
-          tags: hhczy1003/test:ci_${{ env.NOW }}_${{ env.COMMITID }}
+          push: false
           file: docker/Dockerfile
+          build-args: |
+            APP_NAME=${{ env.APP_NAME }}
+            APP_VERSION=${{ env.APP_VERSION }}
+          # 生成两个 docker tag: ${APP_VERSION} 和 latest
+          tags: |
+            ${{ env.DOCKERHUB_REPO }}:latest
+            ${{ env.DOCKERHUB_REPO }}:${{ env.APP_VERSION }}
