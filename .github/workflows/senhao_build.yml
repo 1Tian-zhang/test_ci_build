@@ -1,0 +1,17 @@
+name: ci
+
+on:
+  push:
+
+
+jobs:
+
+      
+  ci_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run build & push script
+        run: |
+          commitSha=${{ github.sha }}
+          IMAGE_TAG=$(date +%Y%m%d)_${commitSha:0:7}
+          bash ./build.sh $IMAGE_TAG
